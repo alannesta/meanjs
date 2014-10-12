@@ -1,7 +1,13 @@
 var express = require('express');
 var app = express();
 var routes = require('./routes');
+var path = require('path');
 
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade')
+
+//Routes
 // Main App Page
 app.get('/', routes.index);
 // app.get('/customer/:id', routes.getcustomerById);
