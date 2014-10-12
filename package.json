@@ -1,6 +1,6 @@
 {
-  "name": "hello-world",
-  "description": "hello world test app",
+  "name": "customer management",
+  "description": "Eva photography",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
