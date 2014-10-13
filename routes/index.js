@@ -10,12 +10,19 @@ var Customer = db.model('customer', CustomerSchema);
 
 exports.index = function(req, res) {
 	// Query Mongo for polls, just get back the question text
-	Customer.find({name: "mongoose"}, 'name', function(error, customer) {
+	Customer.find({name: "mongoose"}, {}, function(error, customer) {
 		// res.json(customer);
 		// console.log(customer);
-		res.render('index', {customer: customer, youAreUsingJade: "true"});
+		res.render('index', {customer: customer});
 	});
 };
+
+exports.getCustomer = function(req, res) {
+	Customer.find({name: "mongoose"}, "name", function(error, customer) {
+		res.json(customer);
+	});
+};
+
 
 exports.create = function(req, res) {
 	var reqBody = req.body,

@@ -12,6 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Main App Page
 app.get('/', routes.index);
 // app.get('/customer/:id', routes.getcustomerById);
+app.get('/customers', routes.getCustomer);
 app.get('/create', routes.create);
 
 // MongoDB API Routes
