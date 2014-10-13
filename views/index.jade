@@ -1,25 +1,17 @@
 doctype html
 html(lang="en")
   head
-    title= pageTitle
-    script(type='text/javascript').
-      function yeehaw(){
-        alert("yeehaw")
-      }     
-  body
-    h1 Jade - node template engine
-    #container.col
-      if youAreUsingJade
-        p You are amazing
-      else
-        p Get on it!
-      ul
-        each val in customer
-          li= val.name
-      p.
-        Jade is a terse and simple
-        templating language with a
-        strong focus on performance
-        and powerful features.
-  script(type='text/javascript').
-    //yeehaw();
+    script(src = "/lib/jquery/dist/jquery.js")
+    script(src="/lib/angular/angular.js")
+    script(src="/lib/angular-resource/angular-resource.js")
+    script(src="/lib/angular-cookies/angular-cookies.js")
+    script(src="/lib/angular-sanitize/angular-sanitize.js")
+    script(src="/lib/angular-route/angular-route.js")
+    script(src="/lib/angular-animate/angular-animate.js")
+    
+  body(ng-app = "test")
+    div(ng-view)
+    
+  script(src="/app.js")
+  script(src="/scripts/mainCtrl.js")
+  
