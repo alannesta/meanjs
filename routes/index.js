@@ -18,7 +18,7 @@ exports.index = function(req, res) {
 };
 
 exports.getCustomer = function(req, res) {
-	Customer.find({name: "mongoose"}, "name", function(error, customer) {
+	Customer.find({}, {}, function(error, customer) {
 		res.json(customer);
 	});
 };
@@ -27,7 +27,7 @@ exports.getCustomer = function(req, res) {
 exports.create = function(req, res) {
 	var reqBody = req.body,
 			// Build up poll object to save
-			customerObj = {name: "mongoose", dob: "2014-10-11"};
+			customerObj = {name: "杨小姐", phone: "514-549-3316", weichat: 21431549, date: [{appointment: "2014-10-11", contact: "2014-10-8"}], note: "100天男宝宝，169套餐"};
 				
 	// Create poll model from built up poll object
 	var customer = new Customer(customerObj);

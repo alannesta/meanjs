@@ -1,10 +1,36 @@
 <div class="container">
-	<nav class="nav navbar">
+	<!-- <nav class="nav navbar">
 		<ul>
 			<li ng-repeat = "customer in customers">
-				{{customer.name}}, {{customer.dob}}
+				{{customer.name}}
 			</li>
 		</ul>
 	</nav>
-	<button class ="btn btn-info">Refresh</button>
+	<button class ="btn btn-info">Refresh</button> -->
+	<h3>Customer Infomation</h3>
+	<button class = "btn btn-large btn-info">添加客户信息</button>
+	<table class="table table-sthiped">
+		<thead>
+			<tr>
+				<th>姓名</th>
+				<th>电话</th>
+				<th>微信</th>
+				<th>时间表</th>
+				<th>客户需求</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat = "customer in customers">
+				<td>{{customer.name}}</td>
+				<td>{{customer.phone}}</td>
+				<td>{{customer.weichat}}</td>
+				<td>
+					<p>{{customer.date[0].contact}}</p>
+					<p>{{customer.date[0].appointment}}</p>
+				</td>
+				<td>{{customer.note}}</td>
+			</tr>
+		</tbody>
+	</table>
+
 </div>

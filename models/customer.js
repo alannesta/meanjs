@@ -3,5 +3,8 @@ var mongoose = require('mongoose');
 
 exports.CustomerSchema = new mongoose.Schema({
 	name: { type: String, required: true },
-	dob: {type: String}
+	phone: String,
+	weichat: String,
+	date: [{appointment: Date, contact: Date}],
+	note: {type: String}
 });
