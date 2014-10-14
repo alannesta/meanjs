@@ -23,9 +23,9 @@ exports.getCustomer = function(req, res) {
 	});
 };
 
-exports.getCustomerByPhone = function(req, res) {
+exports.getCustomerByCid = function(req, res) {
 	// console.log(req.params.phone);
-	Customer.find({phone: req.params.phone}, {}, function(error, customer) {
+	Customer.find({cid: req.params.cid}, {}, function(error, customer) {
 		res.json(customer);
 	});
 };
@@ -37,7 +37,7 @@ exports.saveCustomer = function(req, res) {
 	// var customer = new Customer(customerObj);
 
 	// Save updates to DB
-	Customer.findOneAndUpdate({phone: reqbody.phone}, {name: reqbody.name, phone: reqbody.phone, weichat: reqbody.weichat, date: [{appointment: "2014-10-11", contact: "2014-10-8"}], note: reqbody.note}, {upsert: true}, function(err, doc) {
+	Customer.findOneAndUpdate({cid: reqbody.cid}, {name: reqbody.name, phone: reqbody.phone, weichat: reqbody.weichat, date: [{appointment: "2014-10-11", contact: "2014-10-8"}], note: reqbody.note}, {upsert: true}, function(err, doc) {
 		if(err || !doc) {
 			throw 'Error';
 		} else {
@@ -47,11 +47,12 @@ exports.saveCustomer = function(req, res) {
 	});
 };
 
+//create test data to bootstrap
 exports.create = function(req, res) {
 	var reqBody = req.body,
 	
 	// Build up poll object to save
-	customerObj = {name: "杨小姐", phone: "514-549-3316", weichat: 21431549, date: [{appointment: "2014-10-11", contact: "2014-10-8"}], note: "100天男宝宝，169套餐"};
+	customerObj = {cid: 1, name: "杨小姐", phone: "514-549-3316", weichat: 21431549, date: [{appointment: "2014-10-11", contact: "2014-10-8"}], note: "100天男宝宝，169套餐"};
 	console.log(req.body);	
 
 	//TODO: get last id in the db

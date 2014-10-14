@@ -1,11 +1,11 @@
 'use strict';
 
 app.factory('CustomerCollection', ['$resource', function($resource){
-	return $resource('/customers', {}, {});
+	return $resource('/customers', {});
 }])
 
 app.factory('Customer', ['$resource', function($resource){
-	return $resource('/customers/:phone', {phone: "@phone"}, {
+	return $resource('/customers/:cid', {cid: "@cid"}, {
 		'get': {method:'GET', isArray:true},
 		'save':   {method:'POST'},
 		'query':  {method:'GET', isArray:true},

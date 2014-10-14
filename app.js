@@ -19,8 +19,8 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.get('/', routes.index);
 // app.get('/customer/:id', routes.getcustomerById);
 app.get('/customers', routes.getCustomer);
-app.get('/customers/:phone', routes.getCustomerByPhone);
-app.post('/customers/:phone', routes.saveCustomer);
+app.get('/customers/:cid', routes.getCustomerByCid);
+app.post('/customers/:cid', routes.saveCustomer);
 
 app.get('/create', routes.create);
 

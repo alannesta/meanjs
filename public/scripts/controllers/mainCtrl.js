@@ -3,7 +3,9 @@
 angular.module('customerManagement')
   .controller('MainCtrl', ['$scope', '$resource', 'Customer', 'CustomerCollection', function ($scope, $resource, Customer, CustomerCollection) {
 
+    var lastid = "";
     $scope.addLock = false;
+    var underEditing = {};
 
   	CustomerCollection.query(function(data){
   		$scope.customers = data;
@@ -14,14 +16,17 @@ angular.module('customerManagement')
     $scope.addCustomer = function(){
 
       if($scope.addLock) return;
-
-      var trDom = "<tr><td contenteditable='true' ng-bind = 'customer.name'></td>"+
+      getLastCid(function(result){
+        var newid = result + 1;
+        var trDom = "<tr><td>"+newid+"</td>"+
+                  "<td contenteditable='true' ng-bind = 'customer.name'></td>"+
                   "<td contenteditable='true' ng-bind = 'customer.phone'></td>"+
                   "<td contenteditable='true' ng-bind = 'customer.weichat'></td>"+
                   "<td contenteditable='true' ng-bind = 'customer.name'></td>"+
                   "<td contenteditable='true' ng-bind = 'customer.note'></td></tr>";
-      $("#datatable tbody").prepend($(trDom));
-      $("tbody tr td")[0].focus();
+        $("#datatable tbody").prepend($(trDom));
+        $("tbody tr td")[1].focus();
+      })
       $scope.addLock = true;
     }
 
@@ -41,18 +46,23 @@ angular.module('customerManagement')
 
   			//data base operations:
         var customerObj = {
-          name: $this.parent().find('td')[0].innerHTML,
-          phone: $this.parent().find('td')[1].innerHTML,
-          weichat: $this.parent().find('td')[2].innerHTML,
-          note: $this.parent().find('td')[4].innerHTML,
+          cid: $this.parent().find('td')[0].innerHTML,
+          name: $this.parent().find('td')[1].innerHTML,
+          phone: $this.parent().find('td')[2].innerHTML,
+          weichat: $this.parent().find('td')[3].innerHTML,
+          note: $this.parent().find('td')[5].innerHTML,
         }
-        console.log(customerObj.phone);
-        if (customerObj.phone.length>0){
-          upsertCustomer({phone: customerObj.phone}, customerObj)
-        }else if (customerObj.weichat.length>0){
-          upsertCustomer({weichat: customerObj.weichat}, customerObj)
+
+        //add id field if adding a new customer
+        // if($scope.addLock){
+        //   customerObj.cid = lastid+1
+        // }
+
+        console.log(customerObj.cid);
+        if (customerObj.cid>0){
+          upsertCustomer({cid: customerObj.cid}, customerObj)
         }else{
-          console.log("need to specify either weichat or phone to save");
+          
         }
   		}
   		$this.removeClass("table-editting");
@@ -76,6 +86,7 @@ angular.module('customerManagement')
             result[0].$save();
           }else if (result.length == 0){    //no previous record under the phone or weichat, create a new resource
             var newCustomer = new Customer();
+            newCustomer.cid = customerObj.cid;
             newCustomer.name = customerObj.name;
             newCustomer.phone = customerObj.phone;
             newCustomer.weichat = customerObj.weichat;
@@ -86,4 +97,17 @@ angular.module('customerManagement')
         })
     }
 
+    function getLastCid(callback){
+      CustomerCollection.query({}, function(result){
+        var largestCid = 0;
+        // console.log(result);
+        result.forEach(function(item, index){
+          if (item.cid>largestCid){
+            largestCid = item.cid;
+          }
+        })
+        callback(largestCid);
+        // return largestCid;
+      })
+    }
 }]);
