@@ -30,6 +30,19 @@ exports.getCustomerByCid = function(req, res) {
 	});
 };
 
+exports.deleteCustomer = function(req, res) {
+	// console.log("called");
+	var cid = req.params.cid
+	Customer.remove({cid: req.params.cid}, function(error, status) {
+		if (error){
+			res.send(error);
+		}else{
+			res.status(200).send("Delete Success, id: " + cid);
+		}
+	});
+};
+
+
 exports.saveCustomer = function(req, res) {
 	var reqbody = req.body;
 	console.log(reqbody);

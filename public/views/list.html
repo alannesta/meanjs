@@ -18,10 +18,11 @@
 				<th>微信</th>
 				<th>时间表</th>
 				<th>客户需求</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat = "customer in customers">
+			<tr ng-repeat = "customer in customers track by $index">
 				<td>{{customer.cid}}</td>
 				<td contenteditable="true">{{customer.name}}</td>
 				<td contenteditable="true">{{customer.phone}}</td>
@@ -31,6 +32,7 @@
 					<p>{{customer.date[0].appointment}}</p>
 				</td>
 				<td contenteditable="true">{{customer.note}}</td>
+				<td><button class="btn btn-warning" ng-click = "deleteCustomer(customer, $index)">Delete</button></td>
 			</tr>
 		</tbody>
 	</table>

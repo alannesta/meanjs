@@ -30,6 +30,18 @@ angular.module('customerManagement')
       $scope.addLock = true;
     }
 
+    $scope.deleteCustomer = function(customer, index){
+      console.log(index);
+      // var reference = customer;
+      var target = new Customer(customer);
+      //the delete method is on the instance of the $resource
+      target.$delete(function(data){
+        console.log("delete success");
+        $scope.customers.splice(index, 1);
+      }, function(err){
+
+      });
+    }
 
   	//editable table;
   	$('#datatable').on('focus', '[contenteditable]', function() {

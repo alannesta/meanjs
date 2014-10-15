@@ -17,10 +17,12 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 //Routes
 // Main App Page
 app.get('/', routes.index);
+app.delete('/customers/:cid', routes.deleteCustomer);
 // app.get('/customer/:id', routes.getcustomerById);
 app.get('/customers', routes.getCustomer);
 app.get('/customers/:cid', routes.getCustomerByCid);
 app.post('/customers/:cid', routes.saveCustomer);
+
 
 app.get('/create', routes.create);
 
