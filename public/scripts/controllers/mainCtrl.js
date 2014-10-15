@@ -6,6 +6,7 @@ angular.module('customerManagement')
     $scope.addLock = false;
     var currentIndex = -1;   // refer to the current customer under editting
     var previousIndex = -1;
+    var tempStorage = null;
 
   	CustomerCollection.query(function(data){
   		$scope.customers = data.reverse();
@@ -82,8 +83,7 @@ angular.module('customerManagement')
   	$('#datatable').on('focus', '[contenteditable]', function(event) {
   		var $this = $(this);
       var $that = $(this);  
-      
-  		
+      console.log(tempStorage);
       //get the index of the current editted tr in the dom tree(to match the customer in the customers array)
       $("tbody").find("tr").each(function(index, item){
         if ($(this).find("td")[0].innerHTML == $that.parent().find("td")[0].innerHTML){
@@ -92,13 +92,17 @@ angular.module('customerManagement')
       });
       if (previousIndex != currentIndex){
         console.log("previous: " + previousIndex + " current: "+ currentIndex);
-        //TODO: restore data for customers[previousIndex]
-        event.preventDefault();
-        return;
+        if (previousIndex > -1){
+          // debugger;
+          $scope.customers[previousIndex] = angular.copy(tempStorage);
+          $scope.customers[previousIndex].editting = false;
+          // $scope.$apply();
+        }
       }
 
-      console.log("previous: " + previousIndex + " current: "+ currentIndex);
+      // console.log("previous: " + previousIndex + " current: "+ currentIndex);
       $this.addClass("table-editting");
+      tempStorage = angular.copy($scope.customers[currentIndex]);
       $scope.customers[currentIndex].editting = true;
       $scope.$apply();
 
