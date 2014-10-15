@@ -5,7 +5,6 @@ angular.module('customerManagement')
 
     var lastid = "";
     $scope.addLock = false;
-    var underEditing = {};
 
   	CustomerCollection.query(function(data){
   		$scope.customers = data;
@@ -18,14 +17,33 @@ angular.module('customerManagement')
       if($scope.addLock) return;
       getLastCid(function(result){
         var newid = result + 1;
-        var trDom = "<tr><td>"+newid+"</td>"+
-                  "<td contenteditable='true' ng-bind = 'customer.name'></td>"+
-                  "<td contenteditable='true' ng-bind = 'customer.phone'></td>"+
-                  "<td contenteditable='true' ng-bind = 'customer.weichat'></td>"+
-                  "<td contenteditable='true' ng-bind = 'customer.name'></td>"+
-                  "<td contenteditable='true' ng-bind = 'customer.note'></td></tr>";
-        $("#datatable tbody").prepend($(trDom));
-        $("tbody tr td")[1].focus();
+        // var trDom = "<tr><td>"+newid+"</td>"+
+        //           "<td contenteditable='true' ng-bind = 'customer.name'></td>"+
+        //           "<td contenteditable='true' ng-bind = 'customer.phone'></td>"+
+        //           "<td contenteditable='true' ng-bind = 'customer.weichat'></td>"+
+        //           "<td contenteditable='true' ng-bind = 'customer.name'></td>"+
+        //           "<td contenteditable='true' ng-bind = 'customer.note'></td></tr>";
+        // $("#datatable tbody").prepend($(trDom));
+        // $("tbody tr td")[1].focus();
+
+        var customerObj = {
+          cid: newid,
+          name: "",
+          phone: "",
+          weichat: "",
+          note: ""
+        }
+        $scope.customers.unshift(customerObj);
+        var button = $("<td><button class='btn btn-success' id='savebtn'>Save</button></td>");
+        button.on('click', function(){
+          console.log("save");
+        })
+        var parent = $($("tbody tr")[0])
+        parent.find("button").css("display","none");
+        parent.append(button);
+
+        // console.log($("tbody tr")[0]);
+
       })
       $scope.addLock = true;
     }
