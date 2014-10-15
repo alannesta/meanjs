@@ -2,7 +2,7 @@
 	<!-- <nav class="nav navbar">
 		<ul>
 			<li ng-repeat = "customer in customers">
-				{{customer.name}}
+				{{customer[$index].name}}
 			</li>
 		</ul>
 	</nav>
@@ -32,7 +32,11 @@
 					<p>{{customer.date[0].appointment}}</p>
 				</td>
 				<td contenteditable="true">{{customer.note}}</td>
-				<td><button class="btn btn-warning" ng-click = "deleteCustomer(customer, $index)">Delete</button></td>
+				<td>
+					<button ng-if="!customers[$index].editting" class="btn btn-warning" ng-click = "deleteCustomer(customers[$index], $index)">Delete</button>
+					<button ng-if="customers[$index].editting" class="btn btn-success" ng-click = "saveCustomer(customers[$index], $index)">Save</button>
+					<button ng-if="customers[$index].editting" class="btn" ng-click = "cancelEdit(customers[$index])">Cancel</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>
