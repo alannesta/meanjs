@@ -55,11 +55,13 @@ app.service("Calendar", function(){
         if(scriptLoaded){
           request2.execute(function(resp) {
             console.log(resp);
+            alert("同步成功！")
           });
         }else{
           loadScript(function() {
             request2.execute(function(resp) {
               console.log(resp);
+              alert("同步成功！")
             });
           });
         }
