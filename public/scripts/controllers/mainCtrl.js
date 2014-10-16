@@ -159,12 +159,6 @@ angular.module('customerManagement')
         }
       }
 
-      // $scope.customers[currentIndex].cid= $this.parent().find('td')[0].innerHTML
-      // $scope.customers[currentIndex].name= $this.parent().find('td')[1].innerHTML
-      // $scope.customers[currentIndex].phone= $this.parent().find('td')[2].innerHTML
-      // $scope.customers[currentIndex].weichat= $this.parent().find('td')[3].innerHTML
-      // $scope.customers[currentIndex].note= $this.parent().find('td')[5].innerHTML
-
       previousIndex = currentIndex;
       // console.log("previous: " + previousIndex + " current: "+ currentIndex);
       // $this.addClass("table-editting");
@@ -192,14 +186,8 @@ angular.module('customerManagement')
             result[0].$save();
           }else if (result.length == 0){    //no previous record under the phone or weichat, create a new resource
             console.log("insert")
-            var newCustomer = new Customer();
-            newCustomer.cid = customerObj.cid;
-            newCustomer.name = customerObj.name;
-            newCustomer.phone = customerObj.phone;
-            newCustomer.weichat = customerObj.weichat;
-            newCustomer.appointment = customerObj.appointment;
-            newCustomer.note = customerObj.note;
-            newCustomer.$save();
+            var newCustomer = new Customer(customerObj);
+            // newCustomer.$save();
 
             $http.post('/customers/'+ customerObj.cid, {
                 cid: customerObj.cid,

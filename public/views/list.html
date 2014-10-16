@@ -39,7 +39,7 @@
 				<td contenteditable="true" ng-bind = "customers[$index].note"></td>
 				<td>
 					<button ng-if="!customers[$index].editting" class="btn btn-warning" ng-click = "deleteCustomer(customers[$index], $index)">Delete</button>
-					<button ng-if="!customers[$index].editting" class="btn btn-warning" ng-click = "syncCalendar(customers[$index], $index)">Sync to Calendar</button>
+					<button ng-if="!customers[$index].editting" class="btn btn-primary" ng-click = "syncCalendar(customers[$index], $index)">Sync to Calendar</button>
 					<button ng-if="customers[$index].editting" class="btn btn-success" ng-click = "saveCustomer(customers[$index], $index)">Save</button>
 					<!-- <button ng-if="customers[$index].editting" class="btn" ng-click = "cancelEdit(customers[$index])">Cancel</button> -->
 				</td>
