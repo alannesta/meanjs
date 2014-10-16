@@ -7,24 +7,27 @@
 		</ul>
 	</nav>
 	<button class ="btn btn-info">Refresh</button> -->
-	<h3>Customer Infomation</h3>
-	<button class = "btn btn-large btn-info" ng-click = "addCustomer()">添加客户信息</button>
+	<h1>Customer Infomation</h1>
+	<div class= "addcustomer-btn">
+		<button class = "btn btn-large btn-info" ng-click = "addCustomer()">添加客户信息<i class="fa fa-play-circle"></i></button>
+	</div>
+	
 	<table class="table table-sthiped" id = "datatable">
 	<!-- <table id = "datatable"> -->
 		<thead>
 			<tr>
-				<th>ID</th>
+				<th style="display: none">ID</th>
 				<th>姓名</th>
-				<th>电话</th>
-				<th>微信</th>
-				<th>拍摄时间</th>
-				<th>客户需求</th>
+				<th><i class="fa fa-mobile"></i>电话</th>
+				<th><i class="fa fa-weixin"></i>微信</th>
+				<th><i class="fa fa-calendar"></i>拍摄时间</th>
+				<th><i class="fa fa-check-square-o"></i>客户需求</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat = "customer in customers track by $index">
-				<td ng-bind = "customers[$index].cid"></td>
+				<td ng-bind = "customers[$index].cid" style="display: none"></td>
 				<td contenteditable="true" ng-bind = "customers[$index].name"></td>
 				<td contenteditable="true" ng-bind = "customers[$index].phone"></td>
 				<td contenteditable="true" ng-bind = "customers[$index].weichat"></td>
@@ -38,8 +41,13 @@
 				</td>
 				<td contenteditable="true" ng-bind = "customers[$index].note"></td>
 				<td>
-					<button ng-if="!customers[$index].editting" class="btn btn-warning" ng-click = "deleteCustomer(customers[$index], $index)">Delete</button>
-					<button ng-if="!customers[$index].editting" class="btn btn-primary" ng-click = "syncCalendar(customers[$index], $index)">Sync to Calendar</button>
+					<!-- <button ng-if="!customers[$index].editting" class="btn btn-warning" ng-click = "deleteCustomer(customers[$index], $index)"><i class="fa fa-times-circle"></i></button> -->
+
+					<button ng-disabled ="!customers[$index].appointment" ng-if="!customers[$index].editting" class="btn btn-primary" ng-click = "syncCalendar(customers[$index], $index)">Sync to Calendar</button>
+					<span class="icon-delete">
+						<i class="fa fa-times-circle" ng-if="!customers[$index].editting" class="btn btn-warning" ng-click = "deleteCustomer(customers[$index], $index)"></i>
+					</span>
+					
 					<button ng-if="customers[$index].editting" class="btn btn-success" ng-click = "saveCustomer(customers[$index], $index)">Save</button>
 					<!-- <button ng-if="customers[$index].editting" class="btn" ng-click = "cancelEdit(customers[$index])">Cancel</button> -->
 				</td>

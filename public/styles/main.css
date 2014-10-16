@@ -1,3 +1,24 @@
 .table-editting{
 	font-size: 20px;
 }
+.icon-delete{
+    margin-left: 20px;
+    font-size: 25px;
+    color: red;
+    vertical-align: middle;
+}
+.addcustomer-btn{
+    padding:20px 5px;
+}
+
+.addcustomer-btn i{
+    margin-left: 5px;
+}
+
+th{
+    font-size: 18px;
+}
+
+th i{
+    margin-right: 5px;
+}
