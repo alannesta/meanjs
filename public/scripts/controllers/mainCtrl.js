@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('customerManagement')
-  .controller('MainCtrl', ['$scope', '$resource', '$http', 'Customer', 'CustomerCollection', function ($scope, $resource, $http, Customer, CustomerCollection) {
+  .controller('MainCtrl', ['$scope', '$resource', '$http', 'Customer', 'CustomerCollection', 'Calendar', function ($scope, $resource, $http, Customer, CustomerCollection, Calendar) {
 
     $scope.addLock = false;
     var currentIndex = -1;   // refer to the current customer under editting
@@ -102,6 +102,11 @@ angular.module('customerManagement')
       });
     }
 
+    $scope.auth = function(){
+      console.log("auth");
+      Calendar.auth();
+    }
+
   	//editable table;
   	$('#datatable').on('focus', '[contenteditable]', function(event) {
   		var $this = $(this);
@@ -193,11 +198,6 @@ angular.module('customerManagement')
 
     //utility functions
 
-    function getCurrentEditting(){
-
-    }
-
-
     //get the last(largest) cid in db
     function getLastCid(callback){
       CustomerCollection.query({}, function(result){
@@ -212,4 +212,6 @@ angular.module('customerManagement')
         // return largestCid;
       })
     }
+
+
 }]);
