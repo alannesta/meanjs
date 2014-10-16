@@ -10,13 +10,14 @@
 	<h3>Customer Infomation</h3>
 	<button class = "btn btn-large btn-info" ng-click = "addCustomer()">添加客户信息</button>
 	<table class="table table-sthiped" id = "datatable">
+	<!-- <table id = "datatable"> -->
 		<thead>
 			<tr>
 				<th>ID</th>
 				<th>姓名</th>
 				<th>电话</th>
 				<th>微信</th>
-				<th>时间表</th>
+				<th>拍摄时间</th>
 				<th>客户需求</th>
 				<th></th>
 			</tr>
@@ -28,17 +29,20 @@
 				<td contenteditable="true" ng-bind = "customers[$index].phone"></td>
 				<td contenteditable="true" ng-bind = "customers[$index].weichat"></td>
 				<td contenteditable="true">
-					<p>{{customers[$index].date[0].contact}}</p>
-					<p>{{customers[$index].date[0].appointment}}</p>
+					<!-- <p>{{customers[$index].date[0].contact}}</p>
+					<p>{{customers[$index].date[0].appointment}}</p> -->
+					<input type="date">					
 				</td>
 				<td contenteditable="true" ng-bind = "customers[$index].note"></td>
 				<td>
 					<button ng-if="!customers[$index].editting" class="btn btn-warning" ng-click = "deleteCustomer(customers[$index], $index)">Delete</button>
 					<button ng-if="customers[$index].editting" class="btn btn-success" ng-click = "saveCustomer(customers[$index], $index)">Save</button>
-					<button ng-if="customers[$index].editting" class="btn" ng-click = "cancelEdit(customers[$index])">Cancel</button>
+					<!-- <button ng-if="customers[$index].editting" class="btn" ng-click = "cancelEdit(customers[$index])">Cancel</button> -->
 				</td>
 			</tr>
 		</tbody>
 	</table>
+	<!-- Date: <input type="text" id="datepicker"> -->
+	<!-- <div>Below Calendar</div> -->
 
 </div>

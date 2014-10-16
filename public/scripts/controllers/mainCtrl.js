@@ -126,7 +126,7 @@ angular.module('customerManagement')
 
       previousIndex = currentIndex;
       // console.log("previous: " + previousIndex + " current: "+ currentIndex);
-      $this.addClass("table-editting");
+      // $this.addClass("table-editting");
       // tempStorage = angular.copy($scope.customers[currentIndex]);
       $scope.customers[currentIndex].editting = true;
       $scope.$apply();
