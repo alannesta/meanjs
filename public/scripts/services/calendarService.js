@@ -3,33 +3,73 @@ app.service("Calendar", function(){
     var apiKey = 'AIzaSyBaydTxzKE8DOJ9DxpypVw5mpcwmuCmWr4';
     var scopes = "https://www.googleapis.com/auth/calendar";
 
+    var scriptLoaded = false;
+
     function authCalendar(){
         gapi.client.setApiKey(apiKey);
         gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+
     }
     
     function handleAuthResult(authResult) {
       if (authResult && !authResult.error) {
         console.log("Auth success");
-        makeApiCall();
+        loadScript(function(){
+          console.log("script loaded");
+        });
       }
     }
 
-    function makeApiCall(){
+    function loadScript(callback){
+      gapi.client.load('calendar', 'v3', function(){
+        scriptLoaded = true;
+        callback();
+      });
+    }
+
+    function getCalendarList(){
         console.log("get all calendar call");
-        //load calendar api
-        gapi.client.load('calendar', 'v3', function() {
-          //get all calendar events
-          var request = gapi.client.calendar.events.list({ 
-              'calendarId': 'primary' 
-          }); 
+        var request = gapi.client.calendar.events.list({ 
+            'calendarId': 'primary' 
+        }); 
+        if (scriptLoaded){
           request.execute(function(resp) { 
               console.log (resp);
           });
-        });
+        }else{
+          //load calendar api
+          loadScript(function() {
+            request.execute(function(resp) { 
+                console.log (resp);
+            });
+          });
+        }
+        
     }
+
+    function addCalendarEvent(eventObj){
+        var request2 = gapi.client.calendar.events.insert({
+          'calendarId': 'primary',
+          'resource': eventObj
+        });
+        if(scriptLoaded){
+          request2.execute(function(resp) {
+            console.log(resp);
+          });
+        }else{
+          loadScript(function() {
+            request2.execute(function(resp) {
+              console.log(resp);
+            });
+          });
+        }
+    }
+
+
     return {
-        auth: authCalendar
+        auth: authCalendar,
+        getCalendarList: getCalendarList,
+        addCalendarEvent: addCalendarEvent
     }
 
 });

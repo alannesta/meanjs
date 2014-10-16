@@ -67,6 +67,7 @@ angular.module('customerManagement')
         appointment = dom.find('input').val();
         console.log(" from input"+ appointment);
       }
+      appointment = moment(appointment).toISOString();  //转化为ISO格式
    
       // console.log("before");
       // console.log($scope.customers[index]);
@@ -107,6 +108,29 @@ angular.module('customerManagement')
       Calendar.auth();
     }
 
+    $scope.getCalendarList = function(){
+      // console.log("auth");
+      Calendar.getCalendarList();
+    }
+
+    $scope.syncCalendar = function(customer, index){
+      var events = {
+        "summary": customer.name + "("+ customer.phone +"): "+ customer.note,
+        "location": "Angrinion Park",
+        "start": {
+          "dateTime": customer.appointment
+        },
+        "end": {
+          "dateTime": customer.appointment
+        }
+      }
+      try{
+        Calendar.addCalendarEvent(events);
+      }catch(e){
+        alert("同步失败，请联系丝丝同学");
+      }
+
+    }
   	//editable table;
   	$('#datatable').on('focus', '[contenteditable]', function(event) {
   		var $this = $(this);
