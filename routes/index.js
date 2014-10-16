@@ -45,7 +45,7 @@ exports.deleteCustomer = function(req, res) {
 
 exports.saveCustomer = function(req, res) {
 	var reqbody = req.body;
-	console.log(reqbody);
+	// console.log(reqbody);
 	// customerObj = {id: 1, name: reqbody.name, phone: reqbody.phone, weichat: reqbody.weichat, date: [{appointment: "2014-10-11", contact: "2014-10-8"}], note: reqbody.note};
 	// var customer = new Customer(customerObj);
 

@@ -67,7 +67,12 @@ angular.module('customerManagement')
         appointment = dom.find('input').val();
         console.log(" from input"+ appointment);
       }
+        
       appointment = moment(appointment).toISOString();  //转化为ISO格式
+      if (appointment == 'Invalid date'){
+        appointment = ""
+      }
+      
    
       // console.log("before");
       // console.log($scope.customers[index]);

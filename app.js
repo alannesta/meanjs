@@ -3,12 +3,13 @@ var app = express();
 var routes = require('./routes');
 var path = require('path');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(morgan('common'));
 //body parser
 app.use(bodyParser.urlencoded({'extended':'true'})); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
