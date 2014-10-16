@@ -58,13 +58,23 @@ angular.module('customerManagement')
       }
       
       var dom = $($("tbody").find('tr')[index]);
+      var appointment = ""
+      if(dom.find('div').length>0){
+        appointment = dom.find('div').html();
+        console.log(" from div"+ appointment);
+      }else{
+
+        appointment = dom.find('input').val();
+        console.log(" from input"+ appointment);
+      }
+   
       // console.log("before");
       // console.log($scope.customers[index]);
       $scope.customers[index].cid= dom.find('td')[0].innerHTML
       $scope.customers[index].name= dom.find('td')[1].innerHTML
       $scope.customers[index].phone= dom.find('td')[2].innerHTML
       $scope.customers[index].weichat= dom.find('td')[3].innerHTML
-      $scope.customers[index].appointment= dom.find('input').val()
+      $scope.customers[index].appointment = appointment
       $scope.customers[index].note= dom.find('td')[5].innerHTML
       upsertCustomer({cid: $scope.customers[index].cid}, $scope.customers[index])
       $scope.customers[index].editting = false;
@@ -148,17 +158,20 @@ angular.module('customerManagement')
             result[0].name = customerObj.name;
             result[0].phone = customerObj.phone;
             result[0].weichat = customerObj.weichat;
+            result[0].appointment = customerObj.appointment;
             result[0].note = customerObj.note;
             result[0].$save();
           }else if (result.length == 0){    //no previous record under the phone or weichat, create a new resource
             console.log("insert")
-            // var newCustomer = new Customer();
-            // newCustomer.cid = customerObj.cid;
-            // newCustomer.name = customerObj.name;
-            // newCustomer.phone = customerObj.phone;
-            // newCustomer.weichat = customerObj.weichat;
-            // newCustomer.note = customerObj.note;
-            // newCustomer.$save();
+            var newCustomer = new Customer();
+            newCustomer.cid = customerObj.cid;
+            newCustomer.name = customerObj.name;
+            newCustomer.phone = customerObj.phone;
+            newCustomer.weichat = customerObj.weichat;
+            newCustomer.appointment = customerObj.appointment;
+            newCustomer.note = customerObj.note;
+            newCustomer.$save();
+
             $http.post('/customers/'+ customerObj.cid, {
                 cid: customerObj.cid,
                 name: customerObj.name,
