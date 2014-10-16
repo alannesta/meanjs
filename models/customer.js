@@ -6,6 +6,6 @@ exports.CustomerSchema = new mongoose.Schema({
 	name: { type: String, required: true },
 	phone: String,
 	weichat: String,
-	date: [{appointment: Date, contact: Date}],
+	appointment: Date,
 	note: {type: String}
 });

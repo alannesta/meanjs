@@ -31,7 +31,11 @@
 				<td contenteditable="true">
 					<!-- <p>{{customers[$index].date[0].contact}}</p>
 					<p>{{customers[$index].date[0].appointment}}</p> -->
-					<input type="date">					
+					<div ng-if="customers[$index].appointment">
+						{{customers[$index].appointment | formatDate}}
+					</div>
+					
+					<input ng-if="!customers[$index].appointment" type="date" ng-bind="customers[$index].appointment">					
 				</td>
 				<td contenteditable="true" ng-bind = "customers[$index].note"></td>
 				<td>

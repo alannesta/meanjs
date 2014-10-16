@@ -38,6 +38,7 @@ angular.module('customerManagement')
           name: null,
           phone: null,
           weichat: null,
+          appointment: null,
           note: null,
           editting: true
         }
@@ -63,6 +64,7 @@ angular.module('customerManagement')
       $scope.customers[index].name= dom.find('td')[1].innerHTML
       $scope.customers[index].phone= dom.find('td')[2].innerHTML
       $scope.customers[index].weichat= dom.find('td')[3].innerHTML
+      $scope.customers[index].appointment= dom.find('input').val()
       $scope.customers[index].note= dom.find('td')[5].innerHTML
       upsertCustomer({cid: $scope.customers[index].cid}, $scope.customers[index])
       $scope.customers[index].editting = false;
@@ -162,6 +164,7 @@ angular.module('customerManagement')
                 name: customerObj.name,
                 phone: customerObj.phone,
                 weichat: customerObj.weichat,
+                appointment: customerObj.appointment,
                 note: customerObj.note,
             }).
             success(function(data, status, headers, config){
