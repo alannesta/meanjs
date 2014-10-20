@@ -9,7 +9,7 @@
 	<button class ="btn btn-info">Refresh</button> -->
 	<h1>Customer Infomation</h1>
 	<div class= "addcustomer-btn">
-		<button class = "btn btn-large btn-info" ng-click = "addCustomer()">添加客户信息<i class="fa fa-play-circle"></i></button>
+		<button ng-disable = "$scope.addLock" class = "btn btn-large btn-info" ng-click = "addCustomer()">添加客户信息<i class="fa fa-play-circle"></i></button>
 	</div>
 	
 	<table class="table table-sthiped" id = "datatable">
@@ -30,25 +30,25 @@
 				<td ng-bind = "customers[$index].cid" style="display: none"></td>
 				<td ng-dblclick="editCustomer(customers[$index])">
 					<span ng-bind = "customers[$index].name" ng-hide="customers[$index].editting"></span>
-					<input ng-model = "customers[$index].name" ng-show = "customers[$index].editting" ng-focus="focusHandler(customers[$index])" ng-blur="blurHandler(customers[$index])">
+					<input ng-model = "customers[$index].name" ng-show = "customers[$index].editting" ng-focus="focusHandler(customers[$index])">
 				</td>
 				<td ng-dblclick="editCustomer(customers[$index])">
 					<span ng-bind = "customers[$index].phone" ng-hide="customers[$index].editting"></span>
-					<input ng-model = "customers[$index].phone" ng-show = "customers[$index].editting" ng-focus="focusHandler(customers[$index])" ng-blur="blurHandler(customers[$index])">
+					<input ng-model = "customers[$index].phone" ng-show = "customers[$index].editting" ng-focus="focusHandler(customers[$index])">
 				</td>
 				<td ng-dblclick="editCustomer(customers[$index])">
 					<span ng-bind = "customers[$index].weichat" ng-hide="customers[$index].editting"></span>
-					<input ng-model = "customers[$index].weichat" ng-show = "customers[$index].editting" ng-focus="focusHandler(customers[$index])" ng-blur="blurHandler(customers[$index])">
+					<input ng-model = "customers[$index].weichat" ng-show = "customers[$index].editting" ng-focus="focusHandler(customers[$index])">
 				</td>
 				<td ng-dblclick="editCustomer(customers[$index])">
 					<span ng-bind="customers[$index].appointment | formatDate" ng-hide="customers[$index].editting">
 						<!-- {{customers[$index].appointment | formatDate}} -->
 					</span>
-					<input ng-model="customers[$index].appointment" type="date" ng-show="customers[$index].editting" ng-focus="focusHandler(customers[$index])" ng-blur="blurHandler(customers[$index])">					
+					<input ng-model="customers[$index].appointment" type="date" ng-show="customers[$index].editting" ng-focus="focusHandler(customers[$index])">					
 				</td>
 				<td ng-dblclick="editCustomer(customers[$index])">
 					<span ng-bind = "customers[$index].note" ng-hide="customers[$index].editting"></span>
-					<input ng-model = "customers[$index].note" ng-show = "customers[$index].editting" ng-focus="focusHandler(customers[$index])" ng-blur="blurHandler(customers[$index])">
+					<input ng-model = "customers[$index].note" ng-show = "customers[$index].editting" ng-focus="focusHandler(customers[$index])">
 				</td>
 				<td>
 					<!-- <button ng-if="!customers[$index].editting" class="btn btn-warning" ng-click = "deleteCustomer(customers[$index], $index)"><i class="fa fa-times-circle"></i></button> -->
@@ -59,7 +59,7 @@
 					</span>
 					
 					<button ng-if="customers[$index].editting" class="btn btn-success" ng-click = "saveCustomer(customers[$index], $index)">Save</button>
-					<!-- <button ng-if="customers[$index].editting" class="btn" ng-click = "cancelEdit(customers[$index])">Cancel</button> -->
+					<button ng-if="customers[$index].editting" class="btn" ng-click = "cancelEdit(customers[$index])">Cancel</button>
 				</td>
 			</tr>
 		</tbody>
