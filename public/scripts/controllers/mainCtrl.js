@@ -24,6 +24,9 @@ angular.module('customerManagement')
       });
 
 
+    $scope.sayHello = function(){
+      $scope.greeting = "Hello Ari";
+    }
 
     $scope.addCustomer = function(){
       
