@@ -6,6 +6,7 @@ angular.module('customerManagement')
     $scope.addLock = false;
     var currentIndex = -1;   // refer to the current customer under editting
     var previousIndex = -1;
+    var tempStorage = {};
 
   	// CustomerCollection.query(function(data){
   	// 	$scope.customers = data.reverse();
@@ -50,48 +51,62 @@ angular.module('customerManagement')
     }
 
     //save button handler
-    $scope.saveCustomer = function(customer, index){
+    // $scope.saveCustomer = function(customer, index){
 
-      if (currentIndex>-1){
-        
-        $scope.customers[currentIndex].editting = false;
-      }
+    //   if (currentIndex>-1){
+    //     $scope.customers[currentIndex].editting = false;
+    //   }
       
-      var dom = $($("tbody").find('tr')[index]);
-      var appointment = ""
-      if(dom.find('div').length>0){
-        appointment = dom.find('div').html();
-        console.log(" from div"+ appointment);
-      }else{
+    //   var dom = $($("tbody").find('tr')[index]);
+    //   var appointment = ""
+    //   if(dom.find('div').length>0){
+    //     appointment = dom.find('div').html();
+    //     console.log(" from div"+ appointment);
+    //   }else{
 
-        appointment = dom.find('input').val();
-        console.log(" from input"+ appointment);
-      }
+    //     appointment = dom.find('input').val();
+    //     console.log(" from input"+ appointment);
+    //   }
         
-      appointment = moment(appointment).toISOString();  //转化为ISO格式
-      if (appointment == 'Invalid date'){
-        appointment = ""
-      }
-      
+    //   appointment = moment(appointment).toISOString();  //转化为ISO格式
+    //   if (appointment == 'Invalid date'){
+    //     appointment = ""
+    //   }
    
-      // console.log("before");
-      // console.log($scope.customers[index]);
-      $scope.customers[index].cid= dom.find('td')[0].innerHTML
-      $scope.customers[index].name= dom.find('td')[1].innerHTML
-      $scope.customers[index].phone= dom.find('td')[2].innerHTML
-      $scope.customers[index].weichat= dom.find('td')[3].innerHTML
-      $scope.customers[index].appointment = appointment
-      $scope.customers[index].note= dom.find('td')[5].innerHTML
-      upsertCustomer({cid: $scope.customers[index].cid}, $scope.customers[index])
-      $scope.customers[index].editting = false;
-      // console.log("after");
-      // console.log($scope.customers[index]);
-      $scope.addLock = false;
+    //   // console.log("before");
+    //   // console.log($scope.customers[index]);
+    //   $scope.customers[index].cid= dom.find('td')[0].innerHTML
+    //   $scope.customers[index].name= dom.find('td')[1].innerHTML
+    //   $scope.customers[index].phone= dom.find('td')[2].innerHTML
+    //   $scope.customers[index].weichat= dom.find('td')[3].innerHTML
+    //   $scope.customers[index].appointment = appointment
+    //   $scope.customers[index].note= dom.find('td')[5].innerHTML
+    //   upsertCustomer({cid: $scope.customers[index].cid}, $scope.customers[index])
+    //   $scope.customers[index].editting = false;
+    //   // console.log("after");
+    //   // console.log($scope.customers[index]);
+    //   $scope.addLock = false;
+    // }
+
+    $scope.saveCustomer = function(customer, index){
+      if (customer.appointment){
+        customer.appointment = moment(customer.appointment).toISOString();   //process the data to ISO format
+      }
+      
+      upsertCustomer({cid: customer.cid}, customer, function successHandler(){
+        $scope.addLock = false;
+        customer.editting = false;
+      })
     }
+
 
     //cancel button handler
     $scope.cancelEdit = function(){
 
+    }
+
+    $scope.editCustomer = function(customer){
+      customer.editting = true;
     }
 
     //delete button handler
@@ -137,47 +152,59 @@ angular.module('customerManagement')
 
     }
   	//editable table;
-  	$('#datatable').on('focus', '[contenteditable]', function(event) {
-  		var $this = $(this);
-      var $that = $(this);
-      //get the index of the current editted tr in the dom tree(to match the customer in the customers array)
-      $("tbody").find("tr").each(function(index, item){
-        if ($(this).find("td")[0].innerHTML == $that.parent().find("td")[0].innerHTML){
-          currentIndex = index;
-        }
-      });
-      if (previousIndex != currentIndex){
-        if (previousIndex == -1){
-          $scope.customers[0].editting = false;
-        }else{
-          $scope.customers[previousIndex].editting = false;
-        }
+  	// $('#datatable').on('focus', '[contenteditable]', function(event) {
+  	// 	var $this = $(this);
+   //    var $that = $(this);
+   //    //get the index of the current editted tr in the dom tree(to match the customer in the customers array)
+   //    $("tbody").find("tr").each(function(index, item){
+   //      if ($(this).find("td")[0].innerHTML == $that.parent().find("td")[0].innerHTML){
+   //        currentIndex = index;
+   //      }
+   //    });
+   //    if (previousIndex != currentIndex){
+   //      if (previousIndex == -1){
+   //        $scope.customers[0].editting = false;
+   //      }else{
+   //        $scope.customers[previousIndex].editting = false;
+   //      }
         
-        if (previousIndex > -1){
-          // debugger;
-          // console.log("previous: " + previousIndex + " current: "+ currentIndex);
-          // console.log(tempStorage);
-          // $scope.customers[previousIndex] = angular.copy(tempStorage);
-          // console.log($scope.customers[previousIndex]);
-          // $scope.customers[previousIndex].editting = false;
-          // $scope.$apply();
-        }
-      }
+   //      if (previousIndex > -1){
+   //        // debugger;
+   //        // console.log("previous: " + previousIndex + " current: "+ currentIndex);
+   //        // console.log(tempStorage);
+   //        // $scope.customers[previousIndex] = angular.copy(tempStorage);
+   //        // console.log($scope.customers[previousIndex]);
+   //        // $scope.customers[previousIndex].editting = false;
+   //        // $scope.$apply();
+   //      }
+   //    }
 
-      previousIndex = currentIndex;
-      // console.log("previous: " + previousIndex + " current: "+ currentIndex);
-      // $this.addClass("table-editting");
-      // tempStorage = angular.copy($scope.customers[currentIndex]);
-      $scope.customers[currentIndex].editting = true;
-      $scope.$apply();
+   //    previousIndex = currentIndex;
+   //    // console.log("previous: " + previousIndex + " current: "+ currentIndex);
+   //    // $this.addClass("table-editting");
+   //    // tempStorage = angular.copy($scope.customers[currentIndex]);
+   //    $scope.customers[currentIndex].editting = true;
+   //    $scope.$apply();
 
-  		return $this;
-  	})
+  	// 	return $this;
+  	// })
+  
+    $scope.focusHandler = function(customer){
+      
+    }
+
+    $scope.blurHandler = function(customer){
+      console.log("blur");
+      // customer.editting = false;
+    }
+
+
+
 
     /*
       update or insert the customer into the database;
     */
-  	function upsertCustomer(keyObj, customerObj){
+  	function upsertCustomer(keyObj, customerObj, callback){
       var customer = Customer.get(keyObj, function(result){
           // console.log(result);
           // data[0].note = "changed successfully";
@@ -189,6 +216,8 @@ angular.module('customerManagement')
             result[0].appointment = customerObj.appointment;
             result[0].note = customerObj.note;
             result[0].$save();
+            
+            callback();
           }else if (result.length == 0){    //no previous record under the phone or weichat, create a new resource
             console.log("insert")
             var newCustomer = new Customer(customerObj);
@@ -203,7 +232,7 @@ angular.module('customerManagement')
                 note: customerObj.note,
             }).
             success(function(data, status, headers, config){
-
+              callback();
             }).
             error(function(data, status, headers, config){
                 console.log(status);
