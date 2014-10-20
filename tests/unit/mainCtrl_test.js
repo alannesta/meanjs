@@ -4,28 +4,25 @@ describe('Unit: MainCtrl', function() {
   var ctrl, scope;
   // inject the $controller and $rootScope services
   // in the beforeEach block
-  beforeEach(inject(function($controller, $rootScope, $injector, $resource, CustomerCollection) {
+  beforeEach(inject(function($controller, $rootScope, $resource, _$httpBackend_,$injector) {
     // Create a new scope that's a child of the $rootScope
     scope = $rootScope.$new();
     controller = $controller
     service = $injector.get('CustomerCollection');
     resource = $resource;
+    $httpBackend = $injector.get('$httpBackend');;
+
     // Create the controller
-    // ctrl = $controller('MainCtrl', {
-    //   $scope: scope,
-    //   $resource: resource,
-    //   CustomerCollection: service
-    // });
+    ctrl = $controller('MainCtrl', {
+      $scope: scope,
+      $resource: resource,
+      service: service
+    });
   }));
 
   it('should create $scope.greeting when calling sayHello', 
     function() {
 
-      ctrl = controller('MainCtrl', {
-        $scope: scope,
-        $resource: resource,
-        CustomerCollection: service
-      });
       expect(scope.greeting).toBeUndefined();
       scope.sayHello();
       expect(scope.greeting).toEqual("Hello Ari");
@@ -33,36 +30,23 @@ describe('Unit: MainCtrl', function() {
 
   it('customers array add by one when calling addCustomer function', function(){   //inject the service
 
+    //http://tech.pro/q/57/angularjs-unit-testing-using-jasmine-and-resource-backend
+    //http://stackoverflow.com/questions/21295990/service-injection-to-test-controller-jasmin
+    // should just use _$httpBackend_ to mock the data, no actual http calls in unit test!
     
-    ctrl = controller('MainCtrl', {
-      $scope: scope,
-      $resource: resource,
-      service: service
-    });
-
     var flag = false;
-    runs(function(){
-      expect(service).toBeDefined();
-      service.query(function(data){
-        scope.customers = data;
-        flag = true;
-      }, function(err){
-        console.log(err);
-      });
-      // setTimeout(function(){
-      //   flag =true;
-      // }, 2000)
-    });
 
-    waitsFor(function(){
-      return flag;
-    }, "should get customer data and populates the array");
+    $httpBackend.whenGET('/customers').respond([{
+      name:"kaka",
+      age: "19"
+    }])
 
-    runs(function(){
-      var length = scope.customers.length;
-      scope.addCustomer();
-      expect(scope.customers.length).toEqual(length+1);
-    })
+    scope.customers = $httpBackend.flush();
+
+    var length = scope.customers.length;
+    scope.addCustomer();
+    expect(scope.customers.length).toEqual(length+1);
+    
 
   })
 })
